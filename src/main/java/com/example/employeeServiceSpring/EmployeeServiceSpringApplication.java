@@ -24,10 +24,16 @@ public class EmployeeServiceSpringApplication {
     public CommandLineRunner run() {
         return args -> {
             // Create an Employee object
-            Employee employee = new Employee(1L, "John Doe", "Software Engineer", 60000);
+            Employee employee = new Employee(1L, "John Doe", "Software Engineer","JohnDoe@gmail.com", 70000);
+            Employee employee2 = new Employee(2L, "Jane Smith", "Project Manager", "JaneSmith@gmail.com", 85000);
+            Employee employee3 = new Employee(3L, "David Johnson", "QA Engineer", "DavidJohnson@gmail.com", 70000);
+            
+            
 
             // Save the employee to the database
             employeeRepository.save(employee);
+            employeeRepository.save(employee2);
+            employeeRepository.save(employee3);
 
             // Optionally, print a message to confirm it was saved
             System.out.println("Employee saved: " + employee.getName());
