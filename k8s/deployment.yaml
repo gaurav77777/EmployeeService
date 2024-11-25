@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-service-deployment
+spec:
+  replicas: 1  # Define the number of replicas, can scale later
+  selector:
+    matchLabels:
+      app: employee-service  # This label links the Deployment to the Pod
+  template:
+    metadata:
+      labels:
+        app: employee-service  # The label for the Pods created by this Deployment
+    spec:
+      containers:
+        - name: employee-service  # Name of the container (matches the application)
+          image: gaurav538/employee-service:latest  # Docker image for your app
+          ports:
+            - containerPort: 8081  # Expose the port your Spring Boot app is listening on
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"  # Optionally specify active profiles (e.g., for dev, prod)
