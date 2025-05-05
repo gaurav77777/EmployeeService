@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.employeeServiceSpring.dto.Department;
+import com.example.employeeServiceSpring.dto.EmployeeWithDepartment;
 import com.example.employeeServiceSpring.entity.Employee;
 import com.example.employeeServiceSpring.repository.EmployeeRepository;
 
@@ -14,6 +16,25 @@ public class EmployeeService {
 	
 		@Autowired
 	    private EmployeeRepository employeeRepository;
+		
+		@Autowired
+		private DepartmentClient departmentClient;
+		
+		
+		
+		
+		
+		
+		
+		 public EmployeeWithDepartment getEmployeeWithDepartment(Long id) {
+		        Employee employee = employeeRepository.findById(id).orElseThrow();
+		        Department department = departmentClient.getDepartmentById(employee.getDepartmentId());
+
+		        return EmployeeWithDepartment.builder()
+		                .employee(employee)
+		                .department(department)
+		                .build();
+		    }
 
 	    // Get all employees
 	    public List<Employee> getAllEmployees() {

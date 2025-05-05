@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.employeeServiceSpring.EmployeeServiceSpringApplication;
+import com.example.employeeServiceSpring.dto.EmployeeWithDepartment;
 import com.example.employeeServiceSpring.entity.Employee;
 import com.example.employeeServiceSpring.service.EmployeeService;
 
@@ -88,6 +89,16 @@ public class EmployeeController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    
+    
+    
+    
+    
+    
+    @GetMapping("/employees/{id}/with-department")
+    public EmployeeWithDepartment getEmployeeWithDepartment(@PathVariable Long id) {
+        return employeeService.getEmployeeWithDepartment(id);
     }
 	
 	

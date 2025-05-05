@@ -21,6 +21,21 @@
     <properties>
         <java.version>11</java.version> <!-- Ensure the Java version is set to 11 -->
     </properties>
+    
+    
+    
+    <!-- ✅ Spring Cloud BOM for OpenFeign and others -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2021.0.8</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- Spring Boot Starter Data JPA -->
@@ -41,7 +56,17 @@
             <artifactId>spring-boot-starter-web-services</artifactId>
         </dependency>
 
-        <!-- Spring Boot DevTools for development-time support -->
+		
+		
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		
+
+
+		<!-- Spring Boot DevTools for development-time support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -49,7 +74,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- H2 Database (In-memory database for testing) -->
+		<!-- H2 Database (In-memory database for testing) -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -59,6 +84,18 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Micrometer Prometheus Registry (integration for Prometheus monitoring) -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 
@@ -72,13 +109,13 @@
 
     <build>
         <plugins>
-            <!-- Spring Boot Maven Plugin for running and packaging the Spring Boot application -->
+			<!-- Spring Boot Maven Plugin for running and packaging the Spring Boot application -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- Ensure Java 11 is set as the source and target compatibility -->
+			<!-- Ensure Java 11 is set as the source and target compatibility -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

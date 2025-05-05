@@ -6,11 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import com.example.employeeServiceSpring.entity.Employee;
 import com.example.employeeServiceSpring.repository.EmployeeRepository;
 
+
+
+
+@EnableFeignClients
 @SpringBootApplication
 public class EmployeeServiceSpringApplication {
 	
@@ -31,9 +36,9 @@ public class EmployeeServiceSpringApplication {
     public CommandLineRunner run() {
         return args -> {
             // Create an Employee object
-            Employee employee = new Employee(1L, "John Doe", "Software Engineer","JohnDoe@gmail.com", 70000);
-            Employee employee2 = new Employee(2L, "Jane Smith", "Project Manager", "JaneSmith@gmail.com", 85000);
-            Employee employee3 = new Employee(3L, "David Johnson", "QA Engineer", "DavidJohnson@gmail.com", 70000);
+            Employee employee = new Employee(1L, "John Doe", "Software Engineer","JohnDoe@gmail.com", 70000, 1L);
+            Employee employee2 = new Employee(2L, "Jane Smith", "Project Manager", "JaneSmith@gmail.com", 85000, 1L);
+            Employee employee3 = new Employee(3L, "David Johnson", "QA Engineer", "DavidJohnson@gmail.com", 70000, 1L);
             
             
 

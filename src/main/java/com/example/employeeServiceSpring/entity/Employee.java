@@ -3,7 +3,15 @@ package com.example.employeeServiceSpring.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+
+import lombok.*;
+
+
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Employee {
 	
 	@Id
@@ -15,17 +23,9 @@ public class Employee {
     
     private double salary;
 
-    // Constructors
-    public Employee() {}
-
-	public Employee(Long id, String name, String position, String email, double salary) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.position = position;
-		this.email = email;
-		this.salary = salary;
-	}
+   
+    // Reference to department
+    private Long departmentId;
 
 	public Long getId() {
 		return id;
