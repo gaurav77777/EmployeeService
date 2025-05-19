@@ -7,6 +7,8 @@ spec:
     app: employee-service  # This should match the label used in the Deployment
   ports:
     - protocol: TCP
-      port: 8081        # The port the service will expose
-      targetPort: 8081  # The port your app is actually running on inside the container
-  type: ClusterIP  # By default, only accessible inside the cluster (use NodePort or LoadBalancer if you need external access)
+      port: 8080        # The port the service will expose
+      targetPort: 8080  # The port your app is actually running on inside the container
+      nodePort: 30001  # Expose it on port 30001 on the host
+  type: NodePort
+  
