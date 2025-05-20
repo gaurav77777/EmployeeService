@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +31,11 @@ import com.example.employeeServiceSpring.service.EmployeeService;
 @CrossOrigin(origins = "http://localhost:3000")
 public class EmployeeController {
 	
+	
+	@Value("${server.port}")
+    private String port;
+
+	
 	@Autowired
     private EmployeeService employeeService;
 	
@@ -37,6 +43,16 @@ public class EmployeeController {
     private static final Logger logger = EmployeeServiceSpringApplication.logger;
 
 
+    
+    
+ // Get port
+    @GetMapping("/port")
+    public String getPort() {
+    	 logger.info("Inside getPort");
+        return "Response from Employee Spring on port: " + port;
+    }
+    
+    
     // Get all employees
     @GetMapping
     public List<Employee> getAllEmployees() {
