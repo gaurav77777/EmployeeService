@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
 
 import com.example.employeeServiceSpring.dto.Department;
@@ -14,6 +15,10 @@ import com.example.employeeServiceSpring.repository.EmployeeRepository;
 @Service
 public class EmployeeService {
 	
+	
+		@Autowired
+	    private final CircuitBreakerFactory<?, ?> circuitBreakerFactory;
+	
 		@Autowired
 	    private EmployeeRepository employeeRepository;
 		
@@ -23,18 +28,43 @@ public class EmployeeService {
 		
 		
 		
+		@Autowired
+	    public EmployeeService(EmployeeRepository employeeRepository,
+	                           DepartmentClient departmentClient,
+	                           CircuitBreakerFactory<?, ?> circuitBreakerFactory) {
+	        this.employeeRepository = employeeRepository;
+	        this.departmentClient = departmentClient;
+	        this.circuitBreakerFactory = circuitBreakerFactory;
+	    }
 		
-		
-		
+		 
 		 public EmployeeWithDepartment getEmployeeWithDepartment(Long id) {
 		        Employee employee = employeeRepository.findById(id).orElseThrow();
-		        Department department = departmentClient.getDepartmentById(employee.getDepartmentId());
-
+		        
+		        //Department department = departmentClient.getDepartmentById(employee.getDepartmentId());
+		        
+		        // Wrap the remote call in the circuit breaker
+		        Department department = circuitBreakerFactory.create("departmentServiceCB")
+		                .run(
+		                        () -> departmentClient.getDepartmentById(employee.getDepartmentId()),
+		                        throwable -> getFallbackDepartment(employee.getDepartmentId(), throwable)
+		                );
 		        return EmployeeWithDepartment.builder()
 		                .employee(employee)
 		                .department(department)
 		                .build();
 		    }
+		 
+		 
+		// Fallback method
+		    private Department getFallbackDepartment(Long deptId, Throwable t) {
+		        // You can log the exception if needed
+		        return Department.builder()
+		                .id(deptId)
+		                .name("Unknown Department")
+		                .build();
+		    }
+		
 
 	    // Get all employees
 	    public List<Employee> getAllEmployees() {
